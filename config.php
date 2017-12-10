@@ -9,14 +9,7 @@
 		PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
 		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 	);
-	define( "CONFIG", "./config" );
-	define( "CLASSES", "./classes" );
-	define( "GALERY", "./galery" );
-	define( "PARTS", "./parts" );
-	define( "ADMIN", "./admin" );
-	define( "JS", "./js" );
-	define( "CSS", "./css" );
-	
+
 	define( "TASK", "task" );
 	
 	define( "DUN", "root" );
@@ -26,8 +19,6 @@
 	define( "AIP", 3 );
 	define( "ADNAME", "Alexandr" );
 	define( "ADPAS", "a6684ffbe228e8b647ebca219c95080a" );
-
-require( CLASSES."/task.php" );
 	
 	function handleException( $exception ) {
   echo "Sorry, a problem occurred. Please try later.";

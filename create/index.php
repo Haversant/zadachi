@@ -12,12 +12,12 @@
 	<meta name="viewport" content="width=device-width" />
 	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
 	
-	
 	<link type="text/css" rel="stylesheet" href="css/normalize.css" media="all" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 	<link type="text/css" rel="stylesheet" href="css/jquery.fancybox-1.3.4.css" media="all" />
-	<link type="text/css" rel="stylesheet" href="css/bootstrap.css" media="all" />
-	<link type="text/css" rel="stylesheet" href="css/style.css" media="all" />
+	<link type="text/css" rel="stylesheet" href="../css/bootstrap.css" media="all" />
+	
+	<link type="text/css" rel="stylesheet" href="../css/style.css" media="all" />
 	
 	
 
@@ -32,12 +32,21 @@
 
 
 <body>	<!-- ---- B O D Y ---- -->
+<div class="space"></div>
 <div class="container">
 
-	<h1>Новая задача</h1>
-
-	<form action="/php/db.php?action=create" method="POST">
+	<div class="row align-items-end ">
+		<div class="col-md-9">
+			<h1>Новая задача</h1>
+		</div>
+		<div class="col-md-3 text-right">
+			<a type="button" href="../" class="btn btn-primary btn active" role="button">Список задач</a>
+		</div>
+	</div>
+	
+	<form action="/php/new-task.php?action=create" method="POST">
 		<div class="form-group">
+		<label for="title"></label>
 			<input name="title" class="form-control form-control-lg" type="text" placeholder="Название задачи" required>
 		</div>
 		
@@ -49,11 +58,9 @@
 			<select class="form-control form-control-lg" id="status" name="status" required >
 				
 				<option value="Обычная" selected>Обычная</option>
-				<option value="Необязательно">Можно забить</option>
 				<option value="Не срочно">Не срочно</option>
 				<option value="Срочно">Срочно</option>
 				<option value="Очень срочно">Очень срочно</option>
-				<option value="Мегасрочно">Просрали</option>
 			</select>
 		</div>
 		

@@ -1,15 +1,17 @@
 
 
+.space{margin-top:10%;}
+
 
 
 
 
 @media screen and (max-width: 1400px) {
-	тут CSS правила
+	
 }
 @media screen and (max-width: 1200px) {
-	тут CSS правила
+	.space{margin-top:5%;}
 }
 @media screen and (max-width: 1000px) {
-	тут CSS правила
+	.space{margin-top:0;}
 }

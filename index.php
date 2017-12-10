@@ -40,7 +40,7 @@
 			<h1>Задачник</h1>
 		</div>
 		<div class="col-md-3 text-right">
-			<a type="button" href="new.php" class="btn btn-primary btn active" role="button">Новая задача</a>
+			<a type="button" href="/create" class="btn btn-primary btn active" role="button">Новая задача</a>
 		</div>
 		<!--<a class="button" href="new.php">Новая задача</a>-->
 	</div>
@@ -63,16 +63,17 @@
 			<label for="status"></label>
 			<select class="form-control" id="status" onchange="SendForm()" required >
 				<option value="all">Все статусы</option>
-				<option value="Очень срочно">Очень срочно</option>
-				<option value="Срочно">Срочно</option>
+				<option value="Обычная">Обычная</option>
 				<option value="Не срочно">Не срочно</option>
+				<option value="Срочно">Срочно</option>
+				<option value="Очень срочно">Очень срочно</option>
 			</select>
 			</div>
 		</form>
 
 
 	<!-- content -->
-	<div class="row results">
+	<div class="row">
 		<table class="table table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -82,25 +83,8 @@
 				  <th scope="col">Статус</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-				  <th scope="row">1</th>
-				  <td>Mark</td>
-				  <td>Otto</td>
-				  <td>@mdo</td>
-				</tr>
-				<tr>
-				  <th scope="row">2</th>
-				  <td>Jacob</td>
-				  <td>Thornton</td>
-				  <td>@fat</td>
-				</tr>
-				<tr>
-				  <th scope="row">3</th>
-				  <td>Larry</td>
-				  <td>the Bird</td>
-				  <td>@twitter</td>
-				</tr>
+			<tbody class="results">
+				
 			</tbody>
 		</table>	
 	</div>
@@ -118,18 +102,30 @@
 	function SendForm() {
 		var author=$("#author").val();
 		var status=$("#status").val();
-        $.ajax({
-			
-          type: 'POST',
-          url: 'response.php?action=filter',
-          data: {'author' :author, 'status' :status },
-		  cache: false,
-          success: function(data){
-            $('.results').html(data);
-          }
-        });
-
+		$.ajax({
+			type: 'POST',
+			url: 'php/view-tasks.php?action=list',
+			data: {'author' :author, 'status' :status },
+			cache: false,
+			success: function(data){
+			$('.results').html(data);
+			}
+		});
     }
+	function Close(params) {
+		var id=params;
+		alert(id);
+		/* $.ajax({
+			type: 'POST',
+			url: 'php/view-tasks.php?action=list',
+			data: {'author' :author, 'status' :status },
+			cache: false,
+			success: function(data){
+			$('.results').html(data);
+			}
+		});  */
+    }
+	$(document).load(SendForm());
 	</script>
 </body>
 </html>
