@@ -31,12 +31,13 @@ class Task{
 		if ( $row ) return new Task( $row );
 	}
 	
-	public static function getList( $numRows=1000000, $order="id DESC" ) {
+	public static function getList( $pass=0, $limit=1000000, $order="id DESC" ) {
 		$conn = new PDO( DSN, DUN, DUP, $OP );
 		$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM ".TASK."
-			ORDER BY " .$order. " LIMIT :numRows";
+			ORDER BY " .$order. " LIMIT :pass, :limit";
 		$st = $conn->prepare( $sql );
-		$st->bindValue( ":numRows", $numRows, PDO::PARAM_INT );
+		$st->bindValue( ":pass", $pass, PDO::PARAM_INT );
+		$st->bindValue( ":limit", $limit, PDO::PARAM_INT );
 		$st->execute();
 		$list = array();
 		while ( $row = $st->fetch() ) {

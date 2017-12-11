@@ -35,13 +35,31 @@ switch ($action) {
         break;
 		
 	case 'list':
-			$data = Task::getList();
+		getList();
+		break;
+}
+
+	function getList(){
+			$limit=intval($_POST['limit']);
+			$page=intval($_POST['page']);
+			$pass=$limit*($page-1);
+			//echo $a;
+			$data = Task::getList($pass, $limit );
 			$tasks = $data['results'];
 			$totalRows = $data['totalRows'];
-			echo "ASAS";
-			print_r($tasks);
-			?>
-			
+			$pages_count=ceil($totalRows/$limit); ?>
+	
+			<div class="row">
+				<table class="table table-striped">
+					<thead class="thead-dark">
+						<tr>
+						  <th scope="col"></th>
+						  <th scope="col">Название задачи</th>
+						  <th scope="col">Автор</th>
+						  <th scope="col">Статус</th>
+						</tr>
+					</thead>
+						<tbody>
 			<?php foreach ( $tasks as $task ) { ?>
 				
 				<tr>
@@ -56,11 +74,18 @@ switch ($action) {
 				</tr>
 			
 			<?php } ?>
-		
-		<?php 
-		break;
-}
-
+			</tbody></table></div>
+			<div class="row">
+				<?php for($i=1;$i<=$pages_count;$i++){ 
+					if($i==$page){ ?>
+						<button class="btn btn-secondary col" onclick="SendForm(<?=$i;?>)"><?=$i;?></button>
+					<?php }else{ ?>
+					<button class="btn btn-primary col" onclick="SendForm(<?=$i;?>)"><?=$i;?></button>
+					<?php } ?>
+					
+				<?php } ?>
+			</div> 
+	<?php }
 
 	
  

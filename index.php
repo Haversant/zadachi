@@ -73,21 +73,10 @@
 
 
 	<!-- content -->
-	<div class="row">
-		<table class="table table-striped">
-			<thead class="thead-dark">
-				<tr>
-				  <th scope="col"></th>
-				  <th scope="col">Название задачи</th>
-				  <th scope="col">Автор</th>
-				  <th scope="col">Статус</th>
-				</tr>
-			</thead>
-			<tbody class="results">
+	<div  class="results"><div>
 				
-			</tbody>
-		</table>	
-	</div>
+			
+	
 </div>
 
 <!-- F O O T E R -->
@@ -97,15 +86,20 @@
   
 	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
 	<script type="text/javascript" src="js/jquery.fancybox-1.3.4.js"></script>
+	
 	<!--<script type="text/javascript" src="js/bootstrap.js"></script>-->
 	<script>
-	function SendForm() {
+	
+	function SendForm( pag ) {
 		var author=$("#author").val();
 		var status=$("#status").val();
+		if(pag>=1){var page=pag;}else{var page=1;}
+		var limit=3;
+		
 		$.ajax({
 			type: 'POST',
 			url: 'php/view-tasks.php?action=list',
-			data: {'author' :author, 'status' :status },
+			data: {'author' :author, 'status' :status, 'page' :page, 'limit' :limit },
 			cache: false,
 			success: function(data){
 			$('.results').html(data);
