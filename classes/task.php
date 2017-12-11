@@ -31,13 +31,39 @@ class Task{
 		if ( $row ) return new Task( $row );
 	}
 	
-	public static function getList( $pass=0, $limit=1000000, $order="id DESC" ) {
+	public static function getForms( ) {
 		$conn = new PDO( DSN, DUN, DUP, $OP );
-		$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM ".TASK."
+		$sql = "SELECT author FROM ".TASK;
+		$st = $conn->query($sql);
+		while ($row = $st->fetch()){
+			$list1[]=$row['author'];
+		}
+		$sql = "SELECT status FROM ".TASK;
+		$st = $conn->query($sql);
+		while ($row = $st->fetch()){
+			$list2[]=$row['status'];
+		}
+		$authors=array_count_values($list1);
+		$statuses=array_unique($list2);
+		
+		
+		
+		
+		$conn = null;
+		//if ( $row ) 
+		return ( array ( "statuses" => $statuses, "authors" => $authors ) );
+		return $authors;
+	}
+	
+	public static function getList( $pass=0, $limit=1000000, $author='%', $status='%', $order="id DESC" ) {
+		$conn = new PDO( DSN, DUN, DUP, $OP );
+		$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM ".TASK." WHERE author LIKE :author AND status LIKE :status 
 			ORDER BY " .$order. " LIMIT :pass, :limit";
 		$st = $conn->prepare( $sql );
 		$st->bindValue( ":pass", $pass, PDO::PARAM_INT );
 		$st->bindValue( ":limit", $limit, PDO::PARAM_INT );
+		$st->bindValue( ":author", $author, PDO::PARAM_STR );
+		$st->bindValue( ":status", $status, PDO::PARAM_STR );
 		$st->execute();
 		$list = array();
 		while ( $row = $st->fetch() ) {
@@ -86,23 +112,5 @@ class Task{
 		$st->execute();
 		$conn = null;
 	}
-	
-	public static function counter( $id, $set ){
-		$conn = new PDO( DSN, DUN, DUP, $OP );
-		
-		$sql = "SELECT ".$set." FROM ".TASK." WHERE id = :id";
-		$st = $conn->prepare( $sql );
-		$st->bindValue( ":id", $id, PDO::PARAM_INT );
-		$st->execute();
-		$row = $st->fetch();
-		$l=$row[0]+1;
-		$sql = "UPDATE ".TASK." SET ".$set."=:l WHERE id = :id";
-		$st = $conn->prepare( $sql );
-		$st->bindValue( ":l", $l, PDO::PARAM_INT );
-		$st->bindValue( ":id", $id, PDO::PARAM_INT );
-		$st->execute();
-		$conn = null;
-	}
-	
-	
+
 }

@@ -48,28 +48,8 @@
 
 	<!-- filter -->
 	
-		<form class="row">
-			<div class="form-group col-md-4">
-			<label for="author"></label>
-			<select class="form-control" id="author" onchange="SendForm()" required  >
-				<option value="all">Все авторы</option>
-				<option value="Вася">Вася</option>
-				<option value="Гена">Гена</option>
-				<option value="Коля">Коля</option>
-				<option value="Петя">Петя</option>
-			</select>
-			</div>
-			<div class="form-group col-md-4">
-			<label for="status"></label>
-			<select class="form-control" id="status" onchange="SendForm()" required >
-				<option value="all">Все статусы</option>
-				<option value="Обычная">Обычная</option>
-				<option value="Не срочно">Не срочно</option>
-				<option value="Срочно">Срочно</option>
-				<option value="Очень срочно">Очень срочно</option>
-			</select>
-			</div>
-		</form>
+		<form class="row ajax-form"></form>
+		
 
 
 	<!-- content -->
@@ -90,6 +70,19 @@
 	<!--<script type="text/javascript" src="js/bootstrap.js"></script>-->
 	<script>
 	
+	function getForm() {
+		$.ajax({
+			type: 'POST',
+			url: 'php/view-tasks.php?action=form',
+			data: { },
+			cache: false,
+			success: function(data){
+			$('.ajax-form').html(data);
+			SendForm();
+			}
+		});
+		
+    }
 	function SendForm( pag ) {
 		var author=$("#author").val();
 		var status=$("#status").val();
@@ -119,7 +112,8 @@
 			}
 		});  */
     }
-	$(document).load(SendForm());
+	$(document).load( getForm());
+
 	</script>
 </body>
 </html>
