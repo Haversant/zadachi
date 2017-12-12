@@ -45,10 +45,7 @@ class Task{
 		}
 		$authors=array_count_values($list1);
 		$statuses=array_unique($list2);
-		
-		
-		
-		
+	
 		$conn = null;
 		//if ( $row ) 
 		return ( array ( "statuses" => $statuses, "authors" => $authors ) );

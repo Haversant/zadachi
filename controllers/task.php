@@ -11,9 +11,34 @@ switch ($action) {
 	case 'list':
 		getList();
 		break;
+	case 'create':
+		newTask();
+		break;
+	case 'delete':
+		delTask();
+		break;
+
+	default:
+		header( "Location: ../index.php?status=GetError" );
 }
 
+
+	function newTask() {
+		$results = array();
+
+		if ( isset( $_POST['title'] )&&isset( $_POST['author'] )&&isset( $_POST['status'] ) ) {
+			// сохраняем новую статью
+			$task = new Task;
+			$task->storeFormValues( $_POST );
+			$task->insert();
+			header( "Location: ../index.php?status=TaskCreate" );
+		} else {
+			header( "Location: ../create/index.php?status=PostError" );
+		}
+	}
+	
 	function getForm(){
+		
 		//получаем содержимое форм
 		$forms = Task::getForms();	
 		//подключаем шаблон форм
@@ -42,5 +67,15 @@ switch ($action) {
 			if($pages_count>1){
 				require("../parts/pagenate.php");
 			}
+		}
+		
+		function delTask() {
+			if ( !$task = Task::getById( (int)$_POST['id'] ) ) {
+				header( "Location: ../index.php?error=Deleting task not found" );
+				return;
+			}
+			$title=$task->title;
+			$task->delete();
+			echo "Task by title='".$title."' deleted" ;
 		}
 ?>
